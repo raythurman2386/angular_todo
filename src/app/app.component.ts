@@ -10,11 +10,17 @@ export class AppComponent {
   title = 'Todo';
   description = "What should I do today";
 
-
   filter: "all" | "active" | "done" = "all";
 
-
   allItems: Item[] = []
+
+  ngOnInit() {
+    const storedItems = localStorage.getItem('todoItems');
+
+    if (storedItems) {
+      this.allItems = JSON.parse(storedItems)
+    }
+  }
 
   get items() {
     if (this.filter === "all") {
@@ -32,11 +38,15 @@ export class AppComponent {
       description,
       done: false
     })
+    this.saveItemsToLocalStorage();
   }
 
   remove(item: Item) {
     this.allItems.splice(this.allItems.indexOf(item), 1);
+    this.saveItemsToLocalStorage();
   }
 
-
+  private saveItemsToLocalStorage() {
+    localStorage.setItem('todoItems', JSON.stringify(this.allItems))
+  }
 }
