@@ -4,17 +4,17 @@
   </div>
 </nav>
 <div class="main container">
-  <form class="mb-3 text-center">
+  <div class="mb-3 text-center">
     <label class="form-label h2 mb-3" for="addItemInput">{{description}}</label>
     <div class="mb-3 input-group">
       <input #newItem placeholder="Add an Item" (keyup.enter)="addItem(newItem.value); newItem.value = ''"
         class="form-control input-lg" id="addItemInput">
-      <button type="submit" class="btn btn-success btn-lg" (click)="addItem(newItem.value)">Add</button>
+      <button class="btn btn-success btn-lg" (click)="addItem(newItem.value)">Add</button>
     </div>
-  </form>
+  </div>
 
   <!-- Buttons that show all, still to do, or done items on click -->
-  <div class="btn-group">
+  <div class="btn-group mb-3">
     <button class="btn btn-outline-primary" [class.active]="filter == 'all'" (click)="filter = 'all'">
       All
     </button>
@@ -28,12 +28,16 @@
     </button>
   </div>
 
-
-  <h3 class="mb-3">{{items.length}} <span *ngIf="items.length === 1; else elseBlock">Item</span><ng-template
-      #elseBlock>Items</ng-template></h3>
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let i of items"><app-item (remove)="remove(i)" [item]="i"></app-item></li>
-  </ul>
+  <div *ngIf="items.length > 0">
+    <h3 class="mb-3">{{items.length}} <span *ngIf="items.length === 1; else elseBlock">Item</span><ng-template
+        #elseBlock>Items</ng-template></h3>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let i of items"><app-item (remove)="remove(i)" [item]="i"></app-item></li>
+    </ul>
+  </div>
+  <div *ngIf="items.length === 0">
+    <h3 class="mb-3">There are currently no Todo's</h3>
+  </div>
 </div>
 <nav class="navbar fixed-bottom navbar-light bg-light">
   <div class="container-fluid">
