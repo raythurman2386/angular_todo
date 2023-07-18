@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LocalService } from './local.service';
 import { Item } from './item';
 
 @Component({
@@ -14,8 +15,10 @@ export class AppComponent {
 
   allItems: Item[] = []
 
+  constructor(private localStore: LocalService) { }
+
   ngOnInit() {
-    const storedItems = localStorage.getItem('todoItems');
+    const storedItems = this.localStore.getData('todoItems');
 
     if (storedItems) {
       this.allItems = JSON.parse(storedItems)
@@ -47,6 +50,6 @@ export class AppComponent {
   }
 
   private saveItemsToLocalStorage() {
-    localStorage.setItem('todoItems', JSON.stringify(this.allItems))
+    this.localStore.saveData('todoItems', JSON.stringify(this.allItems))
   }
 }
