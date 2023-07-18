@@ -10,6 +10,8 @@ import { Item } from './item';
 export class AppComponent {
   title = 'Todo';
   description = "What should I do today";
+  year = new Date().getFullYear()
+  owner = 'Raymond Thurman'
 
   filter: "all" | "active" | "done" = "all";
 
